@@ -1,0 +1,6 @@
+{
+	"layout": "post",
+	"tags": ["posts"],
+	"permalink": "/posts/{{ page.date | datePath }}/{{ page.fileSlug }}/",
+	"autoOgImage": true
+}

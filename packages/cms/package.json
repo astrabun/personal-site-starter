@@ -1,0 +1,16 @@
+{
+	"name": "@site/cms",
+	"version": "0.1.0",
+	"private": true,
+	"description": "Command-line helper for creating, listing, and publishing blog posts",
+	"bin": {
+		"site-cms": "./bin/site-cms.js"
+	},
+	"type": "module",
+	"scripts": {
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"yaml": "^2.9.1"
+	}
+}

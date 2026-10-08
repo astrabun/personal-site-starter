@@ -1,0 +1,34 @@
+{
+	"name": "personal-website-starter",
+	"version": "0.1.0",
+	"private": true,
+	"description": "A pnpm + TypeScript + Eleventy starter for personal websites",
+	"license": "MIT",
+	"author": "Astra (https://astrabun.com)",
+	"type": "module",
+	"scripts": {
+		"dev": "pnpm -F @site/web dev",
+		"build": "pnpm -F @site/web build",
+		"clean": "pnpm -F @site/web clean",
+		"cms": "pnpm -F @site/web cms",
+		"new-site": "node scripts/new-site.mjs",
+		"brand": "pnpm -F @site/web brand",
+		"typecheck": "pnpm -r run typecheck",
+		"lint": "oxlint --type-aware",
+		"lint:fix": "oxlint --type-aware --fix",
+		"fmt": "oxfmt",
+		"fmt:check": "oxfmt --check",
+		"check": "pnpm typecheck && pnpm lint && pnpm fmt:check"
+	},
+	"devDependencies": {
+		"@types/node": "^26.6.4",
+		"oxfmt": "^0.72.0",
+		"oxlint": "^1.87.0",
+		"oxlint-tsgolint": "^7.0.2003",
+		"typescript": "^7.0.2"
+	},
+	"engines": {
+		"node": ">=22.18"
+	},
+	"packageManager": "pnpm@10.33.0"
+}

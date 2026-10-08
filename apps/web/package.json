@@ -1,0 +1,26 @@
+{
+	"name": "@site/web",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "eleventy --config=eleventy.config.ts --serve",
+		"build": "eleventy --config=eleventy.config.ts",
+		"clean": "node -e \"fs.rmSync('_site',{recursive:true,force:true})\"",
+		"cms": "site-cms",
+		"typecheck": "tsc --noEmit",
+		"brand": "site-brand"
+	},
+	"dependencies": {
+		"@11ty/eleventy": "^3.1.6",
+		"@11ty/eleventy-plugin-rss": "^3.1.0",
+		"@site/brand": "workspace:*",
+		"yaml": "^2.9.1"
+	},
+	"devDependencies": {
+		"@site/cms": "workspace:*"
+	},
+	"cms": {
+		"postsDir": "src/blog"
+	}
+}

@@ -1,0 +1,38 @@
+# Site-wide metadata. Available in every template as `site`.
+title: My Website
+description: A personal website built with Eleventy.
+# Your production URL, without a trailing slash. Used for canonical URLs,
+# social sharing tags, the feed, and the sitemap.
+url: https://example.com
+language: en
+# Open Graph locale: language_TERRITORY.
+locale: en_US
+
+author:
+  name: Your Name
+  # Your profiles elsewhere. Rendered as rel="me" links (used for Mastodon
+  # verification, IndieAuth, etc.) and in search engine structured data.
+  links: []
+  #  - https://mastodon.social/@you
+  #  - https://github.com/you
+
+# Default image shown when a page is shared on social media. Pages can override
+# it with `image` (and `imageAlt`) in their front matter. 1200×630 works best.
+image:
+  url: /assets/images/og-default.png
+  alt: My Website
+  width: 1200
+  height: 630
+
+# Colors and logo used by `pnpm brand` and `autoOgImage` to generate the
+# favicons and social images. Defaults match the dark theme in
+# src/assets/css/main.css.
+brand:
+  background: '#171614'
+  foreground: '#ebe7e0'
+  muted: '#9a948a'
+  accent: '#6e84f0'
+  onAccent: '#ffffff'
+  # "sun" for the default glyph, or "initials" for your initials.
+  mark: sun
+  # initials: YN # defaults to the initials of author.name

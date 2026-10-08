@@ -1,0 +1,25 @@
+---
+layout: base
+---
+<article class="post">
+	<header class="post-header">
+		<h1>{{ title }}</h1>
+		<p class="meta">
+			<time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time>
+			&middot; {{ content | readingTime }}
+		</p>
+		{%- if tags.size > 1 -%}
+		<ul class="tags">
+			{%- for tag in tags -%}
+			{%- unless tag == "posts" -%}<li>{{ tag }}</li>{%- endunless -%}
+			{%- endfor -%}
+		</ul>
+		{%- endif -%}
+	</header>
+
+	{{ content }}
+
+	<footer class="post-footer">
+		<a href="/posts/">&larr; All posts</a>
+	</footer>
+</article>

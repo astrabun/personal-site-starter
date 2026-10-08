@@ -1,0 +1,5 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"include": ["eleventy.config.ts", "src/**/*.ts", "types/**/*.d.ts"],
+	"exclude": ["node_modules", "_site"]
+}

@@ -1,0 +1,22 @@
+{%- comment -%}
+	Items come from src/_data/navigation.yml. A link is marked current when it
+	matches the page URL exactly, or is a parent section (e.g. /posts/ for each post).
+{%- endcomment -%}
+<nav class="site-nav" aria-label="Main">
+	<ul>
+		{%- for item in navigation -%}
+		{%- assign current = false -%}
+		{%- if page.url == item.url -%}
+			{%- assign current = "page" -%}
+		{%- elsif item.url != "/" and page.url contains item.url -%}
+			{%- assign current = "true" -%}
+		{%- endif -%}
+		<li>
+			<a href="{{ item.url }}"
+				{%- if current %} aria-current="{{ current }}"{% endif -%}
+				{%- if item.external %} target="_blank" rel="noopener"{% endif -%}
+			>{{ item.text }}</a>
+		</li>
+		{%- endfor -%}
+	</ul>
+</nav>

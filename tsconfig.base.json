@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"moduleDetection": "force",
+		"types": ["node"],
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"exactOptionalPropertyTypes": true,
+		"verbatimModuleSyntax": true,
+		"allowImportingTsExtensions": true,
+		"erasableSyntaxOnly": true,
+		"isolatedModules": true,
+		"skipLibCheck": true,
+		"noEmit": true
+	}
+}

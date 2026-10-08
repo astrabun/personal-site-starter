@@ -1,0 +1,8 @@
+# Top-level navigation, rendered by _includes/nav.liquid.
+# Set `external: true` to open a link in a new tab.
+- text: Home
+  url: /
+- text: About
+  url: /about/
+- text: Blog
+  url: /posts/
