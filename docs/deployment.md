@@ -51,6 +51,12 @@ want publishing to happen with a `git push` and nothing else.
 Keep secrets such as API tokens in the repository's secret store. Never commit
 them to the repository.
 
+## Publishing to standard.site
+
+If you've turned on standard.site publishing, add the sync step from
+[standard-site.md](standard-site.md#in-github-actions) to your workflow,
+between `pnpm install` and `pnpm build`, and add its two secrets.
+
 ## Forgejo Actions
 
 Forgejo runs workflows from `.forgejo/workflows/` or `.github/workflows/`. The

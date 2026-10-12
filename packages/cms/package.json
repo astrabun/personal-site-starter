@@ -7,6 +7,10 @@
 		"site-cms": "./bin/site-cms.js"
 	},
 	"type": "module",
+	"exports": {
+		"./config": "./src/config.ts",
+		"./posts": "./src/posts.ts"
+	},
 	"scripts": {
 		"typecheck": "tsc --noEmit"
 	},

@@ -22,6 +22,14 @@ export interface SiteData {
 		width?: number;
 		height?: number;
 	};
+	/** Optional standard.site publishing. See docs/standard-site.md. */
+	standardSite?: {
+		enabled?: boolean;
+		/** Publication icon, relative to apps/web. Default: src/static/apple-touch-icon.png */
+		icon?: string;
+		/** Whether standard.site apps may list the publication in discovery feeds. Default: true */
+		showInDiscover?: boolean;
+	};
 }
 
 /** Reads src/_data/site.yml for use outside of templates (feeds, sitemap, etc). */

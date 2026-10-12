@@ -36,3 +36,13 @@ brand:
   # "sun" for the default glyph, or "initials" for your initials.
   mark: sun
   # initials: YN # defaults to the initials of author.name
+
+# Publish your posts as standard.site records on your AT Protocol (Bluesky)
+# account, so link previews show your site as a publication. Off by default.
+# Credentials come from environment variables. Setup: docs/standard-site.md
+standardSite:
+  enabled: false
+  # Publication icon, relative to apps/web. A square PNG, JPEG, or WebP under 1 MB.
+  # icon: src/static/apple-touch-icon.png
+  # Set to false to keep the publication out of standard.site discovery feeds.
+  # showInDiscover: true

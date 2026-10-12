@@ -3,6 +3,8 @@
 	for each page in config/seo.ts from front matter and src/_data/site.yml.
 	Front matter you can set on any page: description, image, imageAlt,
 	noindex. Posts can also set `updated`.
+	The site.standard.* links appear once `pnpm sync:standard-site` has
+	written src/_data/standardSite.json (see docs/standard-site.md).
 {%- endcomment -%}
 <meta name="description" content="{{ seo.description | escape }}">
 <link rel="canonical" href="{{ seo.url }}">
@@ -36,6 +38,13 @@
 {%- for tag in seo.article.tags %}
 <meta property="article:tag" content="{{ tag | escape }}">
 {%- endfor %}
+{%- endif %}
+
+{%- if seo.standardSite %}
+<link rel="site.standard.publication" href="{{ seo.standardSite.publication }}">
+{%- if seo.standardSite.document %}
+<link rel="site.standard.document" href="{{ seo.standardSite.document }}">
+{%- endif %}
 {%- endif %}
 
 <meta name="twitter:card" content="{{ seo.twitterCard }}">

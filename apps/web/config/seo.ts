@@ -2,6 +2,15 @@ import type UserConfig from '@11ty/eleventy/UserConfig';
 import {ogImageUrl} from '@site/brand/eleventy';
 import type {SiteData} from './site.ts';
 
+/** The shape of src/_data/standardSite.json, written by `pnpm sync:standard-site`. */
+export interface StandardSiteData {
+	did: string;
+	/** AT-URI of the site.standard.publication record. */
+	publication: string;
+	/** Page URL path --> AT-URI of its site.standard.document record. */
+	documents: Record<string, string>;
+}
+
 /** Front matter fields that affect SEO, plus the Eleventy data they're computed from. */
 interface PageData {
 	site: SiteData;
@@ -18,6 +27,8 @@ interface PageData {
 	tags?: string[];
 	/** Ask search engines not to index this page. */
 	noindex?: boolean;
+	/** Only present after `pnpm sync:standard-site` has run (see docs/standard-site.md). */
+	standardSite?: StandardSiteData;
 }
 
 export interface Seo {
@@ -32,6 +43,8 @@ export interface Seo {
 	article?: {published: string; modified?: string; tags: string[]};
 	/** JSON-LD structured data, safe to place inside a <script> tag. */
 	jsonLd: string;
+	/** AT-URIs for the site.standard.* <link> tags. */
+	standardSite?: {publication: string; document?: string};
 }
 
 const isoString = (date: string | Date) => new Date(date).toISOString();
@@ -103,6 +116,13 @@ export function computeSeo(data: PageData): Seo {
 		schema = {'@type': 'WebPage', name: title, description, url};
 	}
 
+	const standardSiteDocument =
+		page.url && data.standardSite?.documents[page.url];
+	const standardSite = data.standardSite && {
+		publication: data.standardSite.publication,
+		...(standardSiteDocument && {document: standardSiteDocument}),
+	};
+
 	return {
 		title,
 		description,
@@ -113,6 +133,7 @@ export function computeSeo(data: PageData): Seo {
 		...(image && {image}),
 		twitterCard: image ? 'summary_large_image' : 'summary',
 		...(article && {article}),
+		...(standardSite && {standardSite}),
 		// Escape `<` so a stray "</script>" in a title can't end the script tag.
 		jsonLd: JSON.stringify({
 			'@context': 'https://schema.org',

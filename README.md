@@ -12,6 +12,7 @@ this is my way of saying "here, take this, get started!"
 - SEO and social sharing tags (Open Graph, social cards, and JSON-LD structured data)
 - Generated favicons and social sharing images in your own colors, including per-post images rendered at build time
 - A `pnpm cms` command for creating, listing, and publishing posts
+- Optional [standard.site](https://standard.site) publishing, so your posts show up as a publication on Bluesky
 - No client-side JavaScript and no CSS framework. One stylesheet includes light and dark themes.
 
 ## Getting started
@@ -85,17 +86,18 @@ Then commit, add your remote, and push as shown above.
 
 Run these from the repository root.
 
-| Command          | What it does                                     |
-| ---------------- | ------------------------------------------------ |
-| `pnpm dev`       | Start a local server that rebuilds on save       |
-| `pnpm build`     | Build the site into `apps/web/_site/`            |
-| `pnpm cms`       | Create, list, and publish blog posts (see below) |
-| `pnpm brand`     | Generate favicons and social images (see below)  |
-| `pnpm typecheck` | Type-check every package                         |
-| `pnpm clean`     | Delete the build output                          |
-| `pnpm lint`      | Lint with oxlint (`pnpm lint:fix` to auto-fix)   |
-| `pnpm fmt`       | Format with oxfmt (`pnpm fmt:check` to verify)   |
-| `pnpm check`     | Type-check, lint, and check formatting           |
+| Command                   | What it does                                         |
+| ------------------------- | ---------------------------------------------------- |
+| `pnpm dev`                | Start a local server that rebuilds on save           |
+| `pnpm build`              | Build the site into `apps/web/_site/`                |
+| `pnpm cms`                | Create, list, and publish blog posts (see below)     |
+| `pnpm brand`              | Generate favicons and social images (see below)      |
+| `pnpm sync:standard-site` | Publish posts to standard.site (optional, see below) |
+| `pnpm typecheck`          | Type-check every package                             |
+| `pnpm clean`              | Delete the build output                              |
+| `pnpm lint`               | Lint with oxlint (`pnpm lint:fix` to auto-fix)       |
+| `pnpm fmt`                | Format with oxfmt (`pnpm fmt:check` to verify)       |
+| `pnpm check`              | Type-check, lint, and check formatting               |
 
 ## Project layout
 
@@ -104,9 +106,10 @@ apps/
 └── web/                      The website
     ├── eleventy.config.ts    Eleventy configuration
     ├── config/               Filters, SEO, drafts handling, and other config helpers
+    ├── scripts/              sync-standard-site.ts (optional standard.site publishing)
     ├── types/                Type declarations for Eleventy
     └── src/
-        ├── _data/            site.yml (metadata) and navigation.yml
+        ├── _data/            site.yml (metadata), navigation.yml, and standardSite.json once synced
         ├── _layouts/         base --> page, base --> post
         ├── _includes/        Partials: head, seo, header, nav, footer, post-list
         ├── assets/           CSS and images (copied as-is to /assets/)
@@ -260,6 +263,18 @@ rendered with [resvg](https://github.com/yisibl/resvg-js), using the
 [Inter](https://rsms.me/inter/) typeface. To change the design, edit
 `packages/brand/src/og.ts`; it uses a flexbox-style element tree, much like
 HTML with inline styles.
+
+## standard.site (optional)
+
+[standard.site](https://standard.site) lets apps on the AT Protocol, such as
+Bluesky, show links to your site as posts from your publication. `pnpm sync:standard-site`
+publishes a record for your site and one for each post to your account, and
+the build adds the matching `<link>` tags and `/.well-known/site.standard.publication`.
+
+It is off by default. To set it up, turn on `standardSite.enabled` in
+`site.yml` and add your handle and an app password as environment variables.
+See [docs/standard-site.md](docs/standard-site.md) for the prerequisites, local
+setup, and a GitHub Actions step that syncs on every deploy.
 
 ## Customizing
 

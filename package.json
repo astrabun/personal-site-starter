@@ -13,6 +13,7 @@
 		"cms": "pnpm -F @site/web cms",
 		"new-site": "node scripts/new-site.mjs",
 		"brand": "pnpm -F @site/web brand",
+		"sync:standard-site": "pnpm -F @site/web sync:standard-site",
 		"typecheck": "pnpm -r run typecheck",
 		"lint": "oxlint --type-aware",
 		"lint:fix": "oxlint --type-aware --fix",

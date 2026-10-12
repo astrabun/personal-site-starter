@@ -9,7 +9,8 @@
 		"clean": "node -e \"fs.rmSync('_site',{recursive:true,force:true})\"",
 		"cms": "site-cms",
 		"typecheck": "tsc --noEmit",
-		"brand": "site-brand"
+		"brand": "site-brand",
+		"sync:standard-site": "node scripts/sync-standard-site.ts"
 	},
 	"dependencies": {
 		"@11ty/eleventy": "^3.1.6",
@@ -18,6 +19,7 @@
 		"yaml": "^2.9.1"
 	},
 	"devDependencies": {
+		"@atproto/api": "^0.24.3",
 		"@site/cms": "workspace:*"
 	},
 	"cms": {
