@@ -3,18 +3,18 @@
   
   <title>My Website</title>
   <subtitle>A personal website built with Eleventy.</subtitle>
-  <link href="https://example.com/feed.xml" rel="self" />
-  <link href="https://example.com/" />
+  <link href="https://astrabun.github.io/personal-site-starter/feed.xml" rel="self" />
+  <link href="https://astrabun.github.io/personal-site-starter/" />
   <updated>2026-10-07T00:00:00Z</updated>
-  <id>https://example.com/</id>
+  <id>https://astrabun.github.io/personal-site-starter/</id>
   <author>
     <name>Your Name</name>
   </author>
   <entry>
     <title>Hello, world</title>
-    <link href="https://example.com/posts/2026/10/07/hello-world/" />
+    <link href="https://astrabun.github.io/personal-site-starter/posts/2026/10/07/hello-world/" />
     <updated>2026-10-07T00:00:00Z</updated>
-    <id>https://example.com/posts/2026/10/07/hello-world/</id>
+    <id>https://astrabun.github.io/personal-site-starter/posts/2026/10/07/hello-world/</id>
     <content type="html">&lt;p&gt;Welcome to the blog! Posts live in &lt;code&gt;src/blog/&lt;/code&gt; and are named
 &lt;code&gt;YYYY-MM-DD-slug.md&lt;/code&gt;. Eleventy reads the date from the filename, and the
 post is published at &lt;code&gt;/posts/YYYY/MM/DD/slug/&lt;/code&gt;.&lt;/p&gt;

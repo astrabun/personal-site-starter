@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>https://example.com/posts/2026/10/07/hello-world/</loc>
+		<loc>https://astrabun.github.io/personal-site-starter/posts/2026/10/07/hello-world/</loc>
 		<lastmod>2026-10-07T00:00:00.000Z</lastmod>
 	</url>
 	<url>
-		<loc>https://example.com/posts/</loc>
+		<loc>https://astrabun.github.io/personal-site-starter/posts/</loc>
 		<lastmod>2026-10-12T04:03:19.106Z</lastmod>
 	</url>
 	<url>
-		<loc>https://example.com/</loc>
+		<loc>https://astrabun.github.io/personal-site-starter/</loc>
 		<lastmod>2026-10-12T04:03:19.106Z</lastmod>
 	</url>
 	<url>
-		<loc>https://example.com/about/</loc>
+		<loc>https://astrabun.github.io/personal-site-starter/about/</loc>
 		<lastmod>2026-10-12T04:03:19.106Z</lastmod>
 	</url>
 </urlset>
