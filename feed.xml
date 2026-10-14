@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  
+  <title>My Website</title>
+  <subtitle>A personal website built with Eleventy.</subtitle>
+  <link href="https://example.com/feed.xml" rel="self" />
+  <link href="https://example.com/" />
+  <updated>2026-10-07T00:00:00Z</updated>
+  <id>https://example.com/</id>
+  <author>
+    <name>Your Name</name>
+  </author>
+  <entry>
+    <title>Hello, world</title>
+    <link href="https://example.com/posts/2026/10/07/hello-world/" />
+    <updated>2026-10-07T00:00:00Z</updated>
+    <id>https://example.com/posts/2026/10/07/hello-world/</id>
+    <content type="html">&lt;p&gt;Welcome to the blog! Posts live in &lt;code&gt;src/blog/&lt;/code&gt; and are named
+&lt;code&gt;YYYY-MM-DD-slug.md&lt;/code&gt;. Eleventy reads the date from the filename, and the
+post is published at &lt;code&gt;/posts/YYYY/MM/DD/slug/&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Create a new one with:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;pnpm cms new
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+  </entry>
+</feed>
