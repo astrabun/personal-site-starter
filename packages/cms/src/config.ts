@@ -4,10 +4,13 @@ import {resolve} from 'node:path';
 export interface CmsConfig {
 	/** Directory containing `YYYY-MM-DD-slug.md` posts, relative to the site root. */
 	postsDir: string;
+	/** Directory containing artwork images and their .md files, relative to the site root. */
+	galleryDir: string;
 }
 
 const DEFAULTS: CmsConfig = {
 	postsDir: 'src/blog',
+	galleryDir: 'src/gallery',
 };
 
 /**
@@ -21,5 +24,8 @@ export function loadConfig(cwd = process.cwd()): CmsConfig {
 		: {};
 	const pkg = parsed as {cms?: Partial<CmsConfig>};
 	const config = {...DEFAULTS, ...pkg.cms};
-	return {...config, postsDir: resolve(cwd, config.postsDir)};
+	return {
+		postsDir: resolve(cwd, config.postsDir),
+		galleryDir: resolve(cwd, config.galleryDir),
+	};
 }

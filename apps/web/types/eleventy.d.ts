@@ -7,7 +7,10 @@ declare module '@11ty/eleventy/UserConfig' {
 	export default interface UserConfig {
 		addPlugin(plugin: Plugin, options?: Record<string, unknown>): void;
 		addFilter(name: string, filter: (...args: any[]) => unknown): void;
-		addShortcode(name: string, shortcode: (...args: any[]) => string): void;
+		addShortcode(
+			name: string,
+			shortcode: (...args: any[]) => string | Promise<string>,
+		): void;
 		addPairedShortcode(
 			name: string,
 			shortcode: (content: string, ...args: any[]) => string,
@@ -46,4 +49,28 @@ declare module '@11ty/eleventy-plugin-rss' {
 		eleventyConfig: UserConfig,
 		options?: Record<string, unknown>,
 	): void;
+	export function dateToRfc3339(date: Date): string;
+	export function convertHtmlToAbsoluteUrls(
+		html: string,
+		base: string,
+	): Promise<string>;
+}
+
+declare module '@11ty/eleventy-img' {
+	export interface ImageResult {
+		url: string;
+		width: number;
+		height: number;
+		format: string;
+	}
+	export type ImageMetadata = Record<string, ImageResult[]>;
+
+	export default function eleventyImage(
+		src: string,
+		options?: Record<string, unknown>,
+	): Promise<ImageMetadata>;
+	export function generateHTML(
+		metadata: ImageMetadata,
+		attributes: Record<string, string>,
+	): string;
 }

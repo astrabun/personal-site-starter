@@ -22,6 +22,17 @@ export interface SiteData {
 		width?: number;
 		height?: number;
 	};
+	/** Atom feeds to publish (see config/feeds.ts). Defaults to one feed with everything. */
+	feeds?: {
+		url: string;
+		name?: string;
+		title?: string;
+		include?: ('posts' | 'artworks')[];
+	}[];
+	gallery?: {
+		/** Link to the untouched original image on every artwork page. */
+		downloadOriginals?: boolean;
+	};
 }
 
 /** Reads src/_data/site.yml for use outside of templates (feeds, sitemap, etc). */

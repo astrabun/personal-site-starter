@@ -209,3 +209,84 @@ blockquote {
 	min-width: 9.5rem;
 	font-variant-numeric: tabular-nums;
 }
+
+/* Gallery. Pages with `wide: true` in their front matter get a wider column. */
+.wide {
+	--measure: 72rem;
+}
+
+.artwork-grid {
+	/* Set to 1 / 1 (or 4 / 5, etc.) to crop thumbnails to one shape. */
+	--thumb-ratio: auto;
+
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+	gap: 1.5rem;
+	align-items: start;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.artwork-grid a {
+	display: block;
+	color: var(--fg);
+	text-decoration: none;
+}
+
+.artwork-grid img {
+	display: block;
+	width: 100%;
+	aspect-ratio: var(--thumb-ratio);
+	object-fit: cover;
+	background: var(--code-bg);
+}
+
+.artwork-grid span {
+	display: block;
+	margin-top: 0.4rem;
+	font-size: 0.9375rem;
+}
+
+.artwork-grid a:hover span {
+	color: var(--accent);
+}
+
+.artwork figure {
+	margin: 0;
+}
+
+.artwork-main img {
+	display: block;
+	margin-inline: auto;
+	max-height: 85vh;
+	width: auto;
+}
+
+.artwork-header,
+.artwork-body {
+	max-width: 42rem;
+}
+
+.artwork-header h1 {
+	margin-bottom: 0.25rem;
+}
+
+.tags a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.artwork-details {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+	gap: 1rem;
+	margin-top: 2rem;
+}
+
+.artwork-nav {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 1rem;
+}

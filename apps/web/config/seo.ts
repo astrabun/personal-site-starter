@@ -1,11 +1,12 @@
 import type UserConfig from '@11ty/eleventy/UserConfig';
 import {ogImageUrl} from '@site/brand/eleventy';
+import {shareImage} from './gallery.ts';
 import type {SiteData} from './site.ts';
 
 /** Front matter fields that affect SEO, plus the Eleventy data they're computed from. */
 interface PageData {
 	site: SiteData;
-	page: {url: string | false; date: Date};
+	page: {url: string | false; date: Date; inputPath: string};
 	title?: string;
 	description?: string;
 	/** Social sharing image for this page; a path like /assets/images/x.png or a full URL. */
@@ -18,6 +19,8 @@ interface PageData {
 	tags?: string[];
 	/** Ask search engines not to index this page. */
 	noindex?: boolean;
+	/** For artworks (see config/gallery.ts). */
+	medium?: string;
 }
 
 export interface Seo {
@@ -36,11 +39,16 @@ export interface Seo {
 
 const isoString = (date: string | Date) => new Date(date).toISOString();
 
-export function computeSeo(data: PageData): Seo {
+/**
+ * @param artworkImage For artworks, the artwork itself as the link-preview
+ * image, used unless the page sets `image`.
+ */
+export function computeSeo(data: PageData, artworkImage?: Seo['image']): Seo {
 	const {site, page} = data;
 	const url = new URL(page.url || '/', site.url).href;
 	const isHome = page.url === '/';
 	const isPost = data.tags?.includes('posts') ?? false;
+	const isArtwork = data.tags?.includes('artworks') ?? false;
 	const title = isHome || !data.title ? site.title : data.title;
 	const description = data.description ?? site.description;
 
@@ -50,6 +58,8 @@ export function computeSeo(data: PageData): Seo {
 			url: new URL(data.image, site.url).href,
 			alt: data.imageAlt ?? '',
 		};
+	} else if (artworkImage) {
+		image = {...artworkImage, url: new URL(artworkImage.url, site.url).href};
 	} else if (data.autoOgImage && page.url) {
 		image = {
 			url: new URL(ogImageUrl(page.url), site.url).href,
@@ -90,6 +100,19 @@ export function computeSeo(data: PageData): Seo {
 			...(image && {image: image.url}),
 			...(article.tags.length ? {keywords: article.tags} : {}),
 		};
+	} else if (isArtwork) {
+		const keywords = (data.tags ?? []).filter((tag) => tag !== 'artworks');
+		schema = {
+			'@type': 'VisualArtwork',
+			name: title,
+			description,
+			url,
+			dateCreated: page.date.toISOString().slice(0, 10),
+			creator: person,
+			...(image && {image: image.url}),
+			...(data.medium && {artMedium: data.medium}),
+			...(keywords.length ? {keywords} : {}),
+		};
 	} else if (isHome) {
 		schema = {
 			'@type': 'WebSite',
@@ -124,6 +147,12 @@ export function computeSeo(data: PageData): Seo {
 /** Makes a computed `seo` object available to every template (see _includes/seo.liquid). */
 export function seo(eleventyConfig: UserConfig) {
 	eleventyConfig.addGlobalData('eleventyComputed', {
-		seo: (data: PageData) => computeSeo(data),
+		seo: async (data: PageData) =>
+			computeSeo(
+				data,
+				data.tags?.includes('artworks') && !data.image
+					? await shareImage(data)
+					: undefined,
+			),
 	});
 }

@@ -48,13 +48,17 @@ export function readPost(path: string): Post | undefined {
 		return undefined;
 	}
 	const [, date = '', slug = ''] = match;
+	return {path, date, slug, ...readFrontMatter(path)};
+}
+
+export function readFrontMatter(path: string): {
+	data: FrontMatter;
+	body: string;
+} {
 	const raw = readFileSync(path, 'utf8');
 	const fm = FRONT_MATTER.exec(raw);
 	const data: unknown = fm ? parseYaml(fm[1] ?? '') : undefined;
 	return {
-		path,
-		date,
-		slug,
 		data: (data ?? {}) as FrontMatter,
 		body: fm ? (fm[2] ?? '') : raw,
 	};

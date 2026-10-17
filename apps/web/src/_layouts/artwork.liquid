@@ -1,0 +1,60 @@
+---
+layout: base
+wide: true
+---
+{%- comment -%}
+	Artworks in src/gallery/. Front matter fields are listed in the README.
+	`download` on the artwork wins over site.gallery.downloadOriginals.
+{%- endcomment -%}
+<article class="artwork">
+	<figure class="artwork-main">
+		{% artworkImage page.inputPath, file, alt, "(min-width: 72rem) 70rem, 100vw", "eager" %}
+	</figure>
+
+	<header class="artwork-header">
+		<h1>{{ title }}</h1>
+		<p class="meta">
+			<time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time>
+			{%- if medium %} &middot; {{ medium }}{% endif -%}
+			{%- if dimensions %} &middot; {{ dimensions }}{% endif -%}
+		</p>
+		{%- if tags.size > 1 -%}
+		<ul class="tags">
+			{%- for tag in tags -%}
+			{%- unless tag == "artworks" -%}
+			<li><a href="/gallery/tags/{{ tag | slugify }}/">{{ tag }}</a></li>
+			{%- endunless -%}
+			{%- endfor -%}
+		</ul>
+		{%- endif -%}
+	</header>
+
+	{%- if content != blank %}
+	<div class="artwork-body">
+		{{ content }}
+	</div>
+	{%- endif %}
+
+	{%- if details.size > 0 %}
+	<div class="artwork-details">
+		{%- for detail in details %}
+		<figure>
+			{% artworkImage page.inputPath, detail.file, detail.alt, "(min-width: 40rem) 50vw, 100vw" %}
+		</figure>
+		{%- endfor %}
+	</div>
+	{%- endif %}
+
+	{%- comment -%} Liquid reads `a or b and c` as `a or (b and c)`. {%- endcomment -%}
+	{%- if download == true or download == nil and site.gallery.downloadOriginals %}
+	<p><a href="{% artworkOriginal page.inputPath, file %}" download>Download original</a></p>
+	{%- endif %}
+
+	<footer class="post-footer artwork-nav">
+		{%- assign previous = collections.artworks | getPreviousCollectionItem -%}
+		{%- assign next = collections.artworks | getNextCollectionItem -%}
+		{%- if next %}<a href="{{ next.url }}" rel="next">&larr; {{ next.data.title }}</a>{% endif %}
+		<a href="/gallery/">All work</a>
+		{%- if previous %}<a href="{{ previous.url }}" rel="prev">{{ previous.data.title }} &rarr;</a>{% endif %}
+	</footer>
+</article>

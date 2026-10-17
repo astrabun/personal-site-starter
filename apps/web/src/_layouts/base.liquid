@@ -3,7 +3,7 @@
 	<head>
 		{%- include "head.liquid" -%}
 	</head>
-	<body>
+	<body{% if wide %} class="wide"{% endif %}>
 		<a class="skip-link" href="#main">Skip to content</a>
 		{%- include "header.liquid" -%}
 		<main id="main" class="container">

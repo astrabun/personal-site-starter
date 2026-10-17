@@ -1,6 +1,8 @@
 <footer class="site-footer container">
 	<p>
 		&copy; {{ "now" | date: "%Y" }} {{ site.author.name }}
-		&middot; <a href="/feed.xml">Feed</a>
+		{%- for feed in feeds %}
+		&middot; <a href="{{ feed.url }}">{{ feed.name }}</a>
+		{%- endfor %}
 	</p>
 </footer>

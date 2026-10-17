@@ -1,0 +1,18 @@
+---
+layout: page
+wide: true
+pagination:
+  data: collections.artworksByTag
+  size: 1
+  alias: tag
+permalink: /gallery/tags/{{ tag | slugify }}/
+eleventyComputed:
+  title: "{{ tag }}"
+---
+{%- comment -%}
+	One page per artwork tag, e.g. /gallery/tags/watercolor/.
+	The groups come from the `artworksByTag` collection in config/gallery.ts.
+{%- endcomment -%}
+{% include "artwork-grid.liquid", artworks: collections.artworksByTag[tag] %}
+
+<p><a href="/gallery/">&larr; All work</a></p>
