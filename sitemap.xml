@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
+		<loc>https://astrabun.github.io/personal-site-starter/gallery/example-portrait/</loc>
+		<lastmod>2026-10-05T00:00:00.000Z</lastmod>
+	</url>
+	<url>
 		<loc>https://astrabun.github.io/personal-site-starter/posts/2026/10/07/hello-world/</loc>
 		<lastmod>2026-10-07T00:00:00.000Z</lastmod>
+	</url>
+	<url>
+		<loc>https://astrabun.github.io/personal-site-starter/gallery/example-landscape/</loc>
+		<lastmod>2026-10-12T00:00:00.000Z</lastmod>
 	</url>
 	<url>
 		<loc>https://astrabun.github.io/personal-site-starter/posts/</loc>
 		<lastmod>2026-10-12T04:03:19.106Z</lastmod>
 	</url>
 	<url>
-		<loc>https://astrabun.github.io/personal-site-starter/</loc>
+		<loc>https://astrabun.github.io/personal-site-starter/about/</loc>
 		<lastmod>2026-10-12T04:03:19.106Z</lastmod>
 	</url>
 	<url>
-		<loc>https://astrabun.github.io/personal-site-starter/about/</loc>
-		<lastmod>2026-10-12T04:03:19.106Z</lastmod>
+		<loc>https://astrabun.github.io/personal-site-starter/gallery/tags/examples/</loc>
+		<lastmod>2026-10-17T19:54:14.987Z</lastmod>
+	</url>
+	<url>
+		<loc>https://astrabun.github.io/personal-site-starter/gallery/</loc>
+		<lastmod>2026-10-17T19:54:14.987Z</lastmod>
+	</url>
+	<url>
+		<loc>https://astrabun.github.io/personal-site-starter/</loc>
+		<lastmod>2026-10-17T19:54:14.987Z</lastmod>
 	</url>
 </urlset>
