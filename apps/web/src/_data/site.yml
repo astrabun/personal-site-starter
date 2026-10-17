@@ -24,6 +24,28 @@ image:
   width: 1200
   height: 630
 
+# Atom feeds. Each one lists the 20 newest items from the sections in
+# `include`: posts, artworks, or both. `name` is the link text in the footer
+# and `title` is what feed readers show (default: the site title).
+#
+# - One feed for everything: delete the second feed.
+# - Separate feeds: set the first feed's include to [posts].
+# - No artwork in feeds at all: delete the second feed and set include: [posts].
+feeds:
+  - url: /feed.xml
+    name: Feed
+    include: [posts, artworks]
+  - url: /gallery/feed.xml
+    name: Gallery feed
+    title: My Website - Gallery
+    include: [artworks]
+
+gallery:
+  # Add a "Download original" link to every artwork page. Originals are
+  # published exactly as uploaded, including any camera or location data in
+  # the file. Set `download: true` or `false` on one artwork to override this.
+  downloadOriginals: false
+
 # Colors and logo used by `pnpm brand` and `autoOgImage` to generate the
 # favicons and social images. Defaults match the dark theme in
 # src/assets/css/main.css.

@@ -1,0 +1,19 @@
+{%- comment -%}
+	Usage:
+		{% assign artworks = collections.artworks | newestFirst %}
+		{% include "artwork-grid.liquid", artworks: artworks %}
+{%- endcomment -%}
+{%- if artworks.size > 0 -%}
+<ul class="artwork-grid">
+	{%- for artwork in artworks -%}
+	<li>
+		<a href="{{ artwork.url }}">
+			{% artworkImage artwork.inputPath, artwork.data.file, artwork.data.alt, "(min-width: 72rem) 22rem, (min-width: 40rem) 45vw, 90vw" %}
+			<span>{{ artwork.data.title }}</span>
+		</a>
+	</li>
+	{%- endfor -%}
+</ul>
+{%- else -%}
+<p>No artwork yet.</p>
+{%- endif -%}

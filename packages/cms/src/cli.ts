@@ -1,4 +1,5 @@
 import {parseArgs} from 'node:util';
+import {art} from './commands/art.ts';
 import {list} from './commands/list.ts';
 import {newPost} from './commands/new.ts';
 import {publish} from './commands/publish.ts';
@@ -23,6 +24,20 @@ Commands:
   publish [draft]    Publish a draft (by slug or filename; prompts if omitted)
       --keep-date          Don't move the post date to today
       -y, --yes            Don't prompt
+
+  art [image...]     Add artwork to the gallery. Copies in the images you pass,
+                     or, with none, finds images in the gallery folder that
+                     don't have a .md file yet. Prompts for anything not passed.
+      --title <text>
+      --slug <slug>        File name (default: from title)
+      --alt <text>         Alt text describing the image
+      --date <YYYY-MM-DD>  (default: today)
+      --description <text>
+      --medium <text>      e.g. "Oil on canvas"
+      --dimensions <text>  e.g. "24 × 36 in"
+      --tags <a,b,c>
+      --draft
+      -y, --yes            Don't prompt; use defaults for anything missing
 `;
 
 async function main() {
@@ -30,7 +45,11 @@ async function main() {
 		allowPositionals: true,
 		allowNegative: true,
 		options: {
+			title: {type: 'string'},
 			slug: {type: 'string'},
+			alt: {type: 'string'},
+			medium: {type: 'string'},
+			dimensions: {type: 'string'},
 			description: {type: 'string'},
 			tags: {type: 'string'},
 			date: {type: 'string'},
@@ -65,6 +84,19 @@ async function main() {
 		case 'publish':
 			return publish(config, rest[0], {
 				keepDate: values['keep-date'],
+				yes: values.yes,
+			});
+		case 'art':
+			return art(config, rest, {
+				title: values.title,
+				slug: values.slug,
+				alt: values.alt,
+				date: values.date,
+				description: values.description,
+				medium: values.medium,
+				dimensions: values.dimensions,
+				tags: values.tags,
+				draft: values.draft,
 				yes: values.yes,
 			});
 		default:

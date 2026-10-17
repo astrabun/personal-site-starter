@@ -13,14 +13,17 @@
 	},
 	"dependencies": {
 		"@11ty/eleventy": "^3.1.6",
+		"@11ty/eleventy-img": "^7.0.0",
 		"@11ty/eleventy-plugin-rss": "^3.1.0",
 		"@site/brand": "workspace:*",
+		"sharp": "^0.35.5",
 		"yaml": "^2.9.1"
 	},
 	"devDependencies": {
 		"@site/cms": "workspace:*"
 	},
 	"cms": {
-		"postsDir": "src/blog"
+		"postsDir": "src/blog",
+		"galleryDir": "src/gallery"
 	}
 }

@@ -1,17 +1,20 @@
 # Personal Website Starter
 
-A small, hackable starting point for a personal website and blog, built with
+A small, hackable starting point for a personal website, blog, and art gallery, built with
 [Eleventy](https://www.11ty.dev/), TypeScript, and pnpm. I will keep yelling about how
 I think everyone should have a personal website until I can't yell anymore, and
 this is my way of saying "here, take this, get started!"
 
 - Pages and blog posts written in Markdown, so writing content is _super easy_
+- An art gallery: drop in your images, run one command to add titles and alt text, and
+  get a gallery page, a page for each piece, and tag pages. Images are resized and
+  stripped of camera and location data automatically.
 - A base layout with a header, data-driven navigation, and footer
 - Drafts you can preview locally that stay out of production builds
-- An Atom feed, sitemap, and `robots.txt`
+- Atom feeds for posts and artwork, together or separately, plus a sitemap and `robots.txt`
 - SEO and social sharing tags (Open Graph, social cards, and JSON-LD structured data)
 - Generated favicons and social sharing images in your own colors, including per-post images rendered at build time
-- A `pnpm cms` command for creating, listing, and publishing posts
+- A `pnpm cms` command for creating, listing, and publishing posts, and adding artwork
 - No client-side JavaScript and no CSS framework. One stylesheet includes light and dark themes.
 
 ## Getting started
@@ -27,7 +30,9 @@ Then make it yours:
 
 1. Edit `apps/web/src/_data/site.yml` with your name, site title, and URL.
 2. Edit the home page in `apps/web/src/index.md`.
-3. Replace the sample posts in `apps/web/src/blog/`.
+3. Replace the sample posts in `apps/web/src/blog/` and the sample artwork in
+   `apps/web/src/gallery/`. Only want one or the other? See
+   [Gallery-only or blog-only sites](#gallery-only-or-blog-only-sites).
 4. Set your colors under `brand` in `site.yml`, then run `pnpm brand all` to
    regenerate the favicons and default social image.
 
@@ -85,17 +90,17 @@ Then commit, add your remote, and push as shown above.
 
 Run these from the repository root.
 
-| Command          | What it does                                     |
-| ---------------- | ------------------------------------------------ |
-| `pnpm dev`       | Start a local server that rebuilds on save       |
-| `pnpm build`     | Build the site into `apps/web/_site/`            |
-| `pnpm cms`       | Create, list, and publish blog posts (see below) |
-| `pnpm brand`     | Generate favicons and social images (see below)  |
-| `pnpm typecheck` | Type-check every package                         |
-| `pnpm clean`     | Delete the build output                          |
-| `pnpm lint`      | Lint with oxlint (`pnpm lint:fix` to auto-fix)   |
-| `pnpm fmt`       | Format with oxfmt (`pnpm fmt:check` to verify)   |
-| `pnpm check`     | Type-check, lint, and check formatting           |
+| Command          | What it does                                    |
+| ---------------- | ----------------------------------------------- |
+| `pnpm dev`       | Start a local server that rebuilds on save      |
+| `pnpm build`     | Build the site into `apps/web/_site/`           |
+| `pnpm cms`       | Create, list, and publish posts; add artwork    |
+| `pnpm brand`     | Generate favicons and social images (see below) |
+| `pnpm typecheck` | Type-check every package                        |
+| `pnpm clean`     | Delete the build output                         |
+| `pnpm lint`      | Lint with oxlint (`pnpm lint:fix` to auto-fix)  |
+| `pnpm fmt`       | Format with oxfmt (`pnpm fmt:check` to verify)  |
+| `pnpm check`     | Type-check, lint, and check formatting          |
 
 ## Project layout
 
@@ -107,14 +112,17 @@ apps/
     ├── types/                Type declarations for Eleventy
     └── src/
         ├── _data/            site.yml (metadata) and navigation.yml
-        ├── _layouts/         base --> page, base --> post
-        ├── _includes/        Partials: head, seo, header, nav, footer, post-list
+        ├── _layouts/         base --> page, base --> post, base --> artwork
+        ├── _includes/        Partials: head, seo, header, nav, footer, post-list, artwork-grid
         ├── assets/           CSS and images (copied as-is to /assets/)
         ├── static/           Copied as-is to the site root: favicons and the like
         ├── blog/             Blog posts: YYYY-MM-DD-slug.md
+        ├── gallery/          Artwork: an image plus a .md file with the same name
         ├── pages/            Standalone pages: about.md --> /about/
         ├── index.md          Home page
-        └── blog.md           Blog index at /posts/
+        ├── blog.md           Blog index at /posts/
+        ├── gallery.md        Gallery index at /gallery/
+        └── gallery-tags.liquid  One page per artwork tag at /gallery/tags/<tag>/
 packages/
 ├── cms/                      The `pnpm cms` command-line tool
 └── brand/                    The `pnpm brand` tool and social image build plugin
@@ -181,13 +189,163 @@ Publishing removes `draft: true` and, unless you pass `--keep-date`, moves the
 post's date to today. Run `pnpm cms --help` for all options.
 
 The CMS looks for posts in `src/blog` by default. To use a different folder,
-set `"cms": { "postsDir": "..." }` in `apps/web/package.json`.
+set `"cms": { "postsDir": "..." }` in `apps/web/package.json`. Artwork is
+added to `galleryDir` (default `src/gallery`). If you move it, also update
+`GALLERY_DIR` in `apps/web/config/gallery.ts`; change `MAX_SIZE` there to allow larger images.
+
+## Gallery
+
+Each artwork in `src/gallery/` is an image plus a Markdown file with the same
+name, and is published at `/gallery/<name>/`:
+
+```
+src/gallery/
+├── art-piece-1.jpg
+├── art-piece-1.md
+├── art-piece-2.png
+└── art-piece-2.md
+```
+
+### Adding artwork
+
+Drag your images into `src/gallery/`, then run:
+
+```sh
+pnpm cms art
+```
+
+It finds every image that doesn't have a `.md` file yet and asks for its title,
+alt text, date, and the other details below. Press Enter to skip any question
+except the title, or type `skip` to leave an image for later. It also renames
+the image to match the title, so `IMG_2034.JPG` becomes `harbor-sketch.jpg`.
+
+You can also pass images from anywhere and they're copied in:
+
+```sh
+pnpm cms art ~/Pictures/harbor.jpg
+pnpm cms art ~/Pictures/harbor.jpg -y --title "Harbor sketch" --alt "Gulls over the harbor" --tags ink
+```
+
+Writing the `.md` file by hand works just as well:
+
+```md
+---
+title: Tide pools at dusk
+date: 2026-10-12
+alt: A deep blue sea under a purple-to-orange sky, with a setting sun.
+description: A small study painted on location.
+medium: Oil on canvas
+dimensions: 24 × 36 in
+tags: [landscapes, plein-air]
+---
+
+Anything here, below the front matter, is shown under the image: process
+notes, an artist statement, where it was shown.
+```
+
+| Field         | Purpose                                                                  |
+| ------------- | ------------------------------------------------------------------------ |
+| `title`       | Artwork title                                                            |
+| `date`        | When it was made or published, e.g. `2026-10-12`. Sets the order.        |
+| `alt`         | Describes the image for screen readers and when it can't load            |
+| `description` | A sentence for link previews and search results                          |
+| `medium`      | e.g. `Watercolor on paper`                                               |
+| `dimensions`  | e.g. `24 × 36 in`                                                        |
+| `tags`        | Series, media, or themes. Each tag gets a page at `/gallery/tags/<tag>/` |
+| `details`     | Extra images: close-ups, process shots, the piece framed (see below)     |
+| `file`        | The image, if its name doesn't match the `.md` file                      |
+| `download`    | `true` or `false`: offer the original file for download (see below)      |
+| `draft`       | If `true`, visible in `pnpm dev` but excluded from builds                |
+
+The build warns about images without a `.md` file and artwork without alt text
+or a date, and stops if a `.md` file's image is missing.
+
+### Detail shots
+
+Put the extra images in `src/gallery/` and list them under `details`:
+
+```yaml
+details:
+  - file: tide-pools-detail.jpg
+    alt: Close-up of the brushwork around the sun.
+```
+
+They're shown below the description on the artwork's page.
+
+### Image sizes and privacy
+
+Your images are never published as-is. At build time, each one is resized to
+a few sizes, the largest 1280px on its longest side, in WebP, with JPEG as a fallback (PNG for art with
+transparency, GIF for animations), and browsers download the smallest one that
+looks sharp. Camera details and GPS location are removed; color profiles are
+kept. Resized images go to `/img/`. The settings are in
+`apps/web/config/gallery.ts`.
+
+To let visitors download the untouched original, set this in `site.yml`:
+
+```yaml
+gallery:
+  downloadOriginals: true
+```
+
+or set `download: true` on individual pieces. Originals are published exactly as
+uploaded, including any camera or location data in the file, so strip it first
+if that matters to you.
+
+Thumbnails keep each piece's own proportions. To crop them all to one shape,
+set `--thumb-ratio: 1 / 1` (or `4 / 5`, etc.) on `.artwork-grid` in `main.css`.
+
+### Gallery-only or blog-only sites
+
+The home page and feeds show whatever you have, so all you need to do is remove
+the part you don't want (and, if you like, the feed you don't need; see
+[Feeds](#feeds)):
+
+- **Gallery only:** delete the posts in `src/blog/` and `src/blog.md`, and remove
+  the Blog link from `src/_data/navigation.yml`.
+- **Blog only:** delete the artwork in `src/gallery/` (keep
+  `gallery.11tydata.json` if you might add some later) and `src/gallery.md`,
+  and remove the Gallery link.
+
+To make the gallery your home page, replace the contents of `src/index.md`
+with the grid from `src/gallery.md`, and add `wide: true` to its front matter
+for the wider layout.
+
+## Feeds
+
+The site publishes Atom feeds of the 20 newest items, as set under `feeds` in
+`site.yml`. By default, there are two: everything, and just the gallery:
+
+```yaml
+feeds:
+  - url: /feed.xml
+    name: Feed # link text in the footer
+    include: [posts, artworks]
+  - url: /gallery/feed.xml
+    name: Gallery feed
+    title: My Website · Gallery # what feed readers show (default: site title)
+    include: [artworks]
+```
+
+Each feed is linked in the footer and in every page's `<head>`, so feed readers
+can find them. Artwork entries show the image, the description, and anything
+written below the front matter.
+
+- **One feed for everything:** delete the second feed.
+- **Separate feeds for posts and artwork:** set the first feed's `include` to `[posts]`.
+- **Keep artwork out of feeds:** delete the second feed and set the first
+  feed's `include` to `[posts]`.
+
+Without a `feeds` setting, the site publishes a single feed at `/feed.xml`
+with both posts and artwork.
 
 ## SEO and social sharing
 
 Every page gets a canonical URL, a meta description, Open Graph and social
 card tags for link previews, and JSON-LD structured data for search engines.
 Posts are marked up as articles, with published and modified dates and tags.
+Artwork is marked up as a `VisualArtwork`, and uses the piece itself as its
+link-preview image.
 
 The tags are filled in automatically from `src/_data/site.yml` and each page's
 front matter. Any page can set:
